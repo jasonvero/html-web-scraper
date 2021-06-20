@@ -51,6 +51,7 @@ containers = page_soup.findAll("div", {"class":"item-container"})
 # this index finally worked
 	# containers[12]
 
+"""
 # for loop to find the brand of gpu
 for container12 in containers:
 	brand = container12.div.div.a.img["title"]
@@ -67,13 +68,30 @@ for container12 in containers:
 	else:
 		print("no product name")
 
-# need to resume trouble shooting from here
-python Beautiful_Soup_Web_Scraper_GPU_tutorial.py
+"""
+
+# need to resume trouble shooting from here 
+# python Beautiful_Soup_Web_Scraper_GPU_tutorial.py
+
+filename = "products.csv"
+f = open(filename, "w")
+
+headers = "gpu_name, price\n"
+
+f.write(headers)
+
+for container in containers:
+	gpu_name = container.div.a["title"]
 
 
+	price_container = container.findAll("li", {"class": "price-current"})
+	price = price_container[0].text.strip()
 
 
+	print("gpu_name: " + gpu_name)
+	print("price: " + price)
 	
-	
+	f.write(gpu_name.replace(",", "|") + "," + price + "\n")
 
 
+f.close()
